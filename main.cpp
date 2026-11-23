@@ -1,3 +1,5 @@
+#include <cctype>
+#include <cstdio>
 #include <cstdlib>
 #include <iostream>
 #include <termios.h>
@@ -29,11 +31,19 @@ void enableRawMode(){
 }
 
 int main(int argc, char* argv[]){
+  enableRawMode();
 
   char c;
 
   while(std::cin.get(c) && c != 'q'){
+  
+    if(std::iscntrl(c)){
+      
+      printf("%d\n",c);
 
+    }else{
+      printf("%d('%c')\n",c,c);
+    }
 
   }
 
