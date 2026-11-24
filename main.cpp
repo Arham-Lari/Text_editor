@@ -26,6 +26,9 @@ void enableRawMode(){
   //Disable echo and canonical mode
    raw.c_lflag &= ~(ECHO | ICANON | ISIG);
 
+   //disabling termination with the help of ctrl+x and ctrl+q(given by defautl)
+    raw.c_lflag &=~(IXON);
+
    //Apply new settings
    tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
 }
