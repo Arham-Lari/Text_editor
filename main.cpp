@@ -24,7 +24,7 @@ void enableRawMode(){
   raw = original;
 
   //Disable echo and canonical mode
-   raw.c_lflag &= ~(ECHO | ICANON);
+   raw.c_lflag &= ~(ECHO | ICANON | ISIG);
 
    //Apply new settings
    tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
