@@ -25,6 +25,7 @@ void enableRawMode(){
 
   //Some more flags
   raw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISIG | IXON);
+  raw.c_cflag |= (CS8);
   
   //Disable echo and canonical mode
    raw.c_lflag &= ~(ECHO | ICANON | ISIG | IEXTEN);
@@ -32,8 +33,10 @@ void enableRawMode(){
    //Turing off all the output process
    raw.c_oflag &= ~(OPOST);
 
-   //disabling termination with the help of ctrl+x and ctrl+q(given by defautl)
-    raw.c_lflag &=~(IXON | ICRNL);
+
+    //adding the time 
+    raw.c_cc[VMIN] = 0 ;
+    raw.c_cc[VTIME] = 1 ;
 
    //Apply new settings
    tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
@@ -42,17 +45,21 @@ void enableRawMode(){
 int main(int argc, char* argv[]){
   enableRawMode();
 
-  char c;
 
-  while(std::cin.get(c) && c != 'q'){
+  while(1){
+
+    char c = '\0';
+    std::cin.get(c);
   
-    if(std::iscntrl(c)){
+    if(std::iscntrl(static_cast<unsigned char>(c))){
       
-      printf("%d\r\n",c);
+      printf("%d\r\n",static_cast<unsigned char>(c));
 
     }else{
-      printf("%d('%c')\r\n",c,c);
+      printf("%d('%c')\r\n",static_cast<unsigned char>(c),c);
     }
+
+    if( c == 'q') break;
 
   }
 
