@@ -23,6 +23,9 @@ void enableRawMode(){
   //copy original settings
   raw = original;
 
+  //Some more flags
+  raw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISIG | IXON);
+  
   //Disable echo and canonical mode
    raw.c_lflag &= ~(ECHO | ICANON | ISIG | IEXTEN);
 
