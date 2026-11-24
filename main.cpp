@@ -24,10 +24,13 @@ void enableRawMode(){
   raw = original;
 
   //Disable echo and canonical mode
-   raw.c_lflag &= ~(ECHO | ICANON | ISIG);
+   raw.c_lflag &= ~(ECHO | ICANON | ISIG | IEXTEN);
+
+   //Turing off all the output process
+   raw.c_oflag &= ~(OPOST);
 
    //disabling termination with the help of ctrl+x and ctrl+q(given by defautl)
-    raw.c_lflag &=~(IXON);
+    raw.c_lflag &=~(IXON | ICRNL);
 
    //Apply new settings
    tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw);
