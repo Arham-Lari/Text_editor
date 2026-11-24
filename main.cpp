@@ -45,10 +45,10 @@ int main(int argc, char* argv[]){
   
     if(std::iscntrl(c)){
       
-      printf("%d\n",c);
+      printf("%d\r\n",c);
 
     }else{
-      printf("%d('%c')\n",c,c);
+      printf("%d('%c')\r\n",c,c);
     }
 
   }
